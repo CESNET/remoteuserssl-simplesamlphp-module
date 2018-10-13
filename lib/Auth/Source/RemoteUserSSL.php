@@ -48,12 +48,14 @@ class sspmod_muni_Auth_Source_RemoteUserSSL extends \SimpleSAML\Auth\Source {
 	assert(is_array($state));
 
         $login = null;
-            if (isset($_SERVER['REMOTE_USER'])) {
-                $login = $_SERVER['REMOTE_USER'];
-            } elseif (isset($_SERVER['SSL_CLIENT_S_DN'])) {
-                $login = $_SERVER['SSL_CLIENT_S_DN'];
-            } else {
+        if (isset($_SERVER['REMOTE_USER'])) {
+            $login = $_SERVER['REMOTE_USER'];
+        } elseif (isset($_SERVER['SSL_CLIENT_S_DN'])) {
+            $login = $_SERVER['SSL_CLIENT_S_DN'];
+        } else {
             // Both variables were empty, this shouldn't happen if the web server is properly configured
+            \SimpleSAML\Logger::error('authRemoteUserSSL: user entered protected area without being properly authenticated');
+            $state['authRemoteUserSSL.error'] = "AUTHERROR";
             $this->authFailed($state);
 
             assert(false); // should never be reached
@@ -61,7 +63,6 @@ class sspmod_muni_Auth_Source_RemoteUserSSL extends \SimpleSAML\Auth\Source {
         }
 
         $uid = $ldapcf->searchfordn(null, $login, true);
-
         if ($uid === null) {
             \SimpleSAML\Logger::info('authRemoteUserSSL: no matching user found in LDAP for login='.$login);
             $state['authRemoteUserSSL.error'] = "UNKNOWNUSER";
@@ -102,8 +103,7 @@ class sspmod_muni_Auth_Source_RemoteUserSSL extends \SimpleSAML\Auth\Source {
      *
      * @param array &$state Information about the current authentication.
      */
-    public function authFailed(&$state)
-    {
+    public function authFailed(&$state) {
         $config = \SimpleSAML\Configuration::getInstance();
 
         $t = new \SimpleSAML\XHTML\Template($config, 'authRemoteUserSSL:error.php');
