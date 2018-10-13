@@ -1,0 +1,8 @@
+{
+	"header": {
+		"en": "Authentication problem"
+	},
+	"text": {
+		"en": "You haven't been found in the list of authorized users."
+	}
+}
