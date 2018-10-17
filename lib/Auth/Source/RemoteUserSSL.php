@@ -49,7 +49,7 @@ class sspmod_muni_Auth_Source_RemoteUserSSL extends \SimpleSAML\Auth\Source {
 
         $login = null;
         if (isset($_SERVER['REMOTE_USER'])) {
-            $login = $_SERVER['REMOTE_USER'];
+            $login = preg_replace('/^([^@]*).*/', '\1', $_SERVER['REMOTE_USER']);
         } elseif (isset($_SERVER['SSL_CLIENT_S_DN'])) {
             $login = $_SERVER['SSL_CLIENT_S_DN'];
         } else {
