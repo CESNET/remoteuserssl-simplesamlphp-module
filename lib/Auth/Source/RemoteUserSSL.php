@@ -1,7 +1,4 @@
 <?php
-
-namespace SimpleSAML\Module\authRemoteUserSSL\Auth\Source;
-
 /**
  * Getting user's identity either from REMOTE_USER or SSL_CLIENT_S_DN. The code of the module has been inspired by module authX509 from Emmanuel Dreyfus <manu@netbsd.org>.
  *
@@ -9,7 +6,7 @@ namespace SimpleSAML\Module\authRemoteUserSSL\Auth\Source;
  *
  * @package SimpleSAMLphp
  */
-class sspmod_muni_Auth_Source_RemoteUserSSL extends \SimpleSAML\Auth\Source {
+class sspmod_remoteuserssl_Auth_Source_RemoteUserSSL extends SimpleSAML_Auth_Source {
 
     /**
      * LDAPConfigHelper object
@@ -29,7 +26,7 @@ class sspmod_muni_Auth_Source_RemoteUserSSL extends \SimpleSAML\Auth\Source {
         // Call the parent constructor first, as required by the interface
         parent::__construct($info, $config);
 
-        $this->ldapcf = new \SimpleSAML\Module\ldap\ConfigHelper(
+        $this->ldapcf = new sspmod_ldap_ConfigHelper(
             $config,
             'Authentication source '.var_export($this->authId, true)
         );
@@ -62,9 +59,9 @@ class sspmod_muni_Auth_Source_RemoteUserSSL extends \SimpleSAML\Auth\Source {
             return;
         }
 
-        $uid = $ldapcf->searchfordn(null, $login, true);
-        if ($uid === null) {
-            \SimpleSAML\Logger::info('authRemoteUserSSL: no matching user found in LDAP for login='.$login);
+        $dn = $this->ldapcf->searchfordn(null, $login, true);
+        if ($dn === null) {
+            \SimpleSAML\Logger::warning('authRemoteUserSSL: no matching user found in LDAP for login='.$login);
             $state['authRemoteUserSSL.error'] = "UNKNOWNUSER";
             $this->authFailed($state);
 
@@ -72,7 +69,8 @@ class sspmod_muni_Auth_Source_RemoteUserSSL extends \SimpleSAML\Auth\Source {
             return;
         }
 
-	$attributes = $ldapcf->getAttributes($uid);
+        \SimpleSAML\Logger::info('authRemoteUserSSL: '.$dn);
+	$attributes = $this->ldapcf->getAttributes($dn);
         assert(is_array($attributes));
         $state['Attributes'] = $attributes;
 
@@ -90,7 +88,7 @@ class sspmod_muni_Auth_Source_RemoteUserSSL extends \SimpleSAML\Auth\Source {
      * @param array &$state Information about the current authentication.
      */
     public function authSuccesful(&$state) {
-        \SimpleSAML\Auth\Source::completeAuth($state);
+        SimpleSAML_Auth_Source::completeAuth($state);
 
         assert(false); // should never be reached
        	return;
