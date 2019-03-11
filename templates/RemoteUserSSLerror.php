@@ -1,4 +1,7 @@
 <?php
+
+use SimpleSAML\Utils\HTTP;
+
 $this->data['header'] = $this->t('{remoteuserssl:RemoteUserSSLerror:header}');
 
 $this->includeAtTemplateBase('includes/header.php');
