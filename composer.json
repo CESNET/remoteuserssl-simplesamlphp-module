@@ -1,0 +1,22 @@
+{
+  "name": "cesnet/simplesamlphp-module-remoteUserSSL",
+  "description": "The module is just getting result of the Basic authentication or SSL authentication done by Apache web server.",
+  "type": "simplesamlphp-module",
+  "version": "1.0.0-dev",
+  "keywords": ["simplesamlphp", "remoteuserssl"],
+  "license": "BSD-2-Clause",
+  "authors": [
+    {
+      "name": "Pavel Vyskocil",
+      "email": "vyskocilpavel@muni.cz"
+    },
+    {
+      "name": "Michal Prochazka",
+      "email": "michalp@ics.muni.cz"
+    }
+  ],
+  "require": {
+    "simplesamlphp/simplesamlphp": "~1.16.3",
+    "simplesamlphp/composer-module-installer": "~1.0"
+  }
+}
