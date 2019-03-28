@@ -1,5 +1,5 @@
 <?php
-$this->data['header'] = $this->t('{remoteUserSSL:RemoteUserSSLerror:header}');
+$this->data['header'] = $this->t('{remoteuserssl:RemoteUserSSLerror:header}');
 
 $this->includeAtTemplateBase('includes/header.php');
 
@@ -16,8 +16,8 @@ if (isset($this->data['errorcode']) && $this->data['errorcode'] !== null) {
 
 ?>
     <div class="alert alert-warning">
-        <p><strong><?php echo $this->t('{remoteUserSSL:RemoteUserSSLerror:header}'); ?></strong></p>
-        <p><?php echo $this->t('{remoteUserSSL:RemoteUserSSLerror:text}'); ?></p>
+        <p><strong><?php echo $this->t('{remoteuserssl:RemoteUserSSLerror:header}'); ?></strong></p>
+        <p><?php echo $this->t('{remoteuserssl:RemoteUserSSLerror:text}'); ?></p>
 
     </div>
 <?php

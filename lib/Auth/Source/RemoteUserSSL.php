@@ -61,14 +61,14 @@ class sspmod_remoteUserSSL_Auth_Source_RemoteUserSSL extends SimpleSAML_Auth_Sou
 
         $dn = $this->ldapcf->searchfordn(null, $login, true);
         if ($dn === null) {
-            \SimpleSAML\Logger::warning('remoteUserSSL: no matching user found in LDAP for login='.$login);
+            \SimpleSAML\Logger::warning('remoteuserssl: no matching user found in LDAP for login='.$login);
             $this->authFailed($state);
 
             assert(false); // should never be reached
             return;
         }
 
-        \SimpleSAML\Logger::info('authRemoteUserSSL: '.$dn);
+        \SimpleSAML\Logger::info('remoteuserssl: '.$dn);
 	$attributes = $this->ldapcf->getAttributes($dn);
         assert(is_array($attributes));
         $state['Attributes'] = $attributes;
@@ -103,7 +103,7 @@ class sspmod_remoteUserSSL_Auth_Source_RemoteUserSSL extends SimpleSAML_Auth_Sou
     public function authFailed(&$state) {
         $config = SimpleSAML_Configuration::getInstance();
 
-        $t = new SimpleSAML_XHTML_Template($config, 'remoteUserSSL:RemoteUserSSLerror.php');
+        $t = new SimpleSAML_XHTML_Template($config, 'remoteuserssl:RemoteUserSSLerror.php');
         $t->data['loginurl'] = \SimpleSAML\Utils\HTTP::getSelfURL();
 
         if (isset($state['remoteUserSSL.error'])) {
