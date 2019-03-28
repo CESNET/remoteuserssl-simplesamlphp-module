@@ -6,7 +6,7 @@
  *
  * @package SimpleSAMLphp
  */
-class sspmod_remoteuserssl_Auth_Source_RemoteUserSSL extends SimpleSAML_Auth_Source {
+class sspmod_remoteUserSSL_Auth_Source_RemoteUserSSL extends SimpleSAML_Auth_Source {
 
     /**
      * LDAPConfigHelper object
@@ -51,8 +51,8 @@ class sspmod_remoteuserssl_Auth_Source_RemoteUserSSL extends SimpleSAML_Auth_Sou
             $login = $_SERVER['SSL_CLIENT_S_DN'];
         } else {
             // Both variables were empty, this shouldn't happen if the web server is properly configured
-            \SimpleSAML\Logger::error('authRemoteUserSSL: user entered protected area without being properly authenticated');
-            $state['authRemoteUserSSL.error'] = "AUTHERROR";
+            \SimpleSAML\Logger::error('remoteUserSSL: user entered protected area without being properly authenticated');
+            $state['remoteUserSSL.error'] = "AUTHERROR";
             $this->authFailed($state);
 
             assert(false); // should never be reached
@@ -61,8 +61,7 @@ class sspmod_remoteuserssl_Auth_Source_RemoteUserSSL extends SimpleSAML_Auth_Sou
 
         $dn = $this->ldapcf->searchfordn(null, $login, true);
         if ($dn === null) {
-            \SimpleSAML\Logger::warning('authRemoteUserSSL: no matching user found in LDAP for login='.$login);
-            $state['authRemoteUserSSL.error'] = "UNKNOWNUSER";
+            \SimpleSAML\Logger::warning('remoteUserSSL: no matching user found in LDAP for login='.$login);
             $this->authFailed($state);
 
             assert(false); // should never be reached
@@ -102,11 +101,14 @@ class sspmod_remoteuserssl_Auth_Source_RemoteUserSSL extends SimpleSAML_Auth_Sou
      * @param array &$state Information about the current authentication.
      */
     public function authFailed(&$state) {
-        $config = \SimpleSAML\Configuration::getInstance();
+        $config = SimpleSAML_Configuration::getInstance();
 
-        $t = new \SimpleSAML\XHTML\Template($config, 'authRemoteUserSSL:error.php');
+        $t = new SimpleSAML_XHTML_Template($config, 'remoteUserSSL:RemoteUserSSLerror.php');
         $t->data['loginurl'] = \SimpleSAML\Utils\HTTP::getSelfURL();
-        $t->data['errorcode'] = $state['authRemoteUserSSL.error'];
+
+        if (isset($state['remoteUserSSL.error'])) {
+            $t->data['errorcode'] = $state['remoteUserSSL.error'];
+        }
         $t->data['errorcodes'] = \SimpleSAML\Error\ErrorCodes::getAllErrorCodeMessages();
 
         $t->show();

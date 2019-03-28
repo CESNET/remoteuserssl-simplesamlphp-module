@@ -1,28 +1,27 @@
 <?php
-$this->data['header'] = $this->t('{authRemoteUserSSL:RemoteUserSSLerror:header}');
+$this->data['header'] = $this->t('{remoteUserSSL:RemoteUserSSLerror:header}');
 
 $this->includeAtTemplateBase('includes/header.php');
 
-if ($this->data['errorcode'] !== null) {
+if (isset($this->data['errorcode']) && $this->data['errorcode'] !== null) {
 ?>
-    <div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5">
-        <img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-error.48x48.png" class="float-l" style="margin: 15px" alt="" />
-        <h2><?php echo $this->t('{login:error_header}'); ?></h2>
+    <div class="alert alert-warning">
+        <p><strong><?php echo $this->t('{login:error_header}'); ?></strong></p>
         <p><b><?php echo $this->t($this->data['errorcodes']['title'][$this->data['errorcode']]); ?></b></p>
         <p><?php echo $this->t($this->data['errorcodes']['descr'][$this->data['errorcode']]); ?></p>
     </div>
 <?php
-}
+} else {
+
+
 ?>
-    <h2 style="break: both"><?php echo $this->t('{authRemoteUserSSL:RemoteUserSSLerror:header}'); ?></h2>
+    <div class="alert alert-warning">
+        <p><strong><?php echo $this->t('{remoteUserSSL:RemoteUserSSLerror:header}'); ?></strong></p>
+        <p><?php echo $this->t('{remoteUserSSL:RemoteUserSSLerror:text}'); ?></p>
 
-    <p><?php echo $this->t('{authRemoteUserSSL:RemoteUserSSLerror:text}'); ?></p>
-
-    <a href="<?php echo htmlspecialchars(\SimpleSAML\Utils\HTTP::getSelfURL()); ?>">
-        <?php echo $this->t('{login:login_button}'); ?>
-    </a>
+    </div>
 <?php
-
+}
 if (!empty($this->data['links'])) {
     echo '<ul class="links" style="margin-top: 2em">';
     foreach ($this->data['links'] as $l) {
