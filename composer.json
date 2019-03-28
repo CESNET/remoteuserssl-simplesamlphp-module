@@ -2,7 +2,7 @@
   "name": "cesnet/simplesamlphp-module-remoteuserssl",
   "description": "The module is just getting result of the Basic authentication or SSL authentication done by Apache web server.",
   "type": "simplesamlphp-module",
-  "version": "1.0.0-dev",
+  "version": "1.0.0",
   "keywords": ["simplesamlphp", "remoteuserssl"],
   "license": "BSD-2-Clause",
   "authors": [
