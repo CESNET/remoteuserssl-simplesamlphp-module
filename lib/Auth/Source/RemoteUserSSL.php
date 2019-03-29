@@ -45,10 +45,10 @@ class sspmod_remoteUserSSL_Auth_Source_RemoteUserSSL extends SimpleSAML_Auth_Sou
 	assert(is_array($state));
 
         $login = null;
-        if (isset($_SERVER['REMOTE_USER'])) {
-            $login = preg_replace('/^([^@]*).*/', '\1', $_SERVER['REMOTE_USER']);
-        } elseif (isset($_SERVER['SSL_CLIENT_S_DN'])) {
+        if (isset($_SERVER['SSL_CLIENT_S_DN'])) {
             $login = $_SERVER['SSL_CLIENT_S_DN'];
+        } elseif (isset($_SERVER['REMOTE_USER'])) {
+            $login = preg_replace('/^([^@]*).*/', '\1', $_SERVER['REMOTE_USER']);
         } else {
             // Both variables were empty, this shouldn't happen if the web server is properly configured
             \SimpleSAML\Logger::error('remoteUserSSL: user entered protected area without being properly authenticated');
