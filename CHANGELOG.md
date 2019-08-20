@@ -2,15 +2,15 @@
 All notable changes to this project will be documented in this file.
  
 ## [Unreleased]
-[Added]
+#### Added
 - Added file phpcs.xml
 
-[Changed]
+#### Changed
 - Changed code style to PSR-2
 - Using namespaces
 
 ## [v1.0.1]
-[Fixed]
+#### Fixed
 - Fixed problem with certificates, which contains scope
 
 ## [v1.0.0]
