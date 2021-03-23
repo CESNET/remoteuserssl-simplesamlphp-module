@@ -16,7 +16,7 @@
     }
   ],
   "require": {
-    "simplesamlphp/simplesamlphp": "~1.16.3",
+    "simplesamlphp/simplesamlphp": "~1.17",
     "simplesamlphp/composer-module-installer": "~1.0"
   }
 }
